@@ -366,7 +366,7 @@
   <div class="screen active" id="screen-0">
     <div class="config-notice" id="configNotice">
       <strong>⚠ Configuración requerida antes de usar</strong>
-      Reemplaza <code>https://script.google.com/macros/s/AKfycbySantZ5PARz2wFM_-LRMDDneWQQg3RzOxW5Ba3sKvevPrfsXh_sIKWaWKbTk8GFetC/exec</code> por la URL de tu Google Apps Script.
+      Reemplaza <code>https://script.google.com/macros/s/AKfycbxlUls21mhcTdmQ_n8VRhKCXWnDZwCPnId7aTFjOLcCZkHpvJL13WSi3iMPWg3KgpyfVg/exec</code> por la URL de tu Google Apps Script.
     </div>
     <div class="welcome-hero">
       <div style="font-size:44px">📋</div>
@@ -410,16 +410,20 @@
       </div>
       <div class="section-label">Facilitadores y obstaculizadores</div>
       <div class="grid2">
-        <div class="field"><label>Facilitador 1 <span class="req">*</span></label><textarea id="l_fac1" rows="3" placeholder="Primer facilitador…"></textarea></div>
-        <div class="field"><label>Facilitador 2 <span class="req">*</span></label><textarea id="l_fac2" rows="3" placeholder="Segundo facilitador…"></textarea></div>
-        <div class="field"><label>Obstaculizador 1 <span class="req">*</span></label><textarea id="l_obs1" rows="3" placeholder="Primer obstaculizador…"></textarea></div>
-        <div class="field"><label>Obstaculizador 2 <span class="req">*</span></label><textarea id="l_obs2" rows="3" placeholder="Segundo obstaculizador…"></textarea></div>
+        <div class="field"><label>Facilitador 1 <span class="req">*</span></label><textarea id="l_fac1" rows="3" placeholder="Ej: Equipo con experiencia previa en ciclo ATP, director con disposición al acompañamiento, reuniones semanales consolidadas…"></textarea></div>
+        <div class="field"><label>Facilitador 2 <span class="req">*</span></label><textarea id="l_fac2" rows="3" placeholder="Ej: Acceso a datos SIMCE y DIA actualizados, buena coordinación entre SLEP y DEPROV…"></textarea></div>
+        <div class="field"><label>Obstaculizador 1 <span class="req">*</span></label><textarea id="l_obs1" rows="3" placeholder="Ej: Alta rotación docente, establecimientos muy dispersos geográficamente, sobrecarga administrativa del equipo directivo…"></textarea></div>
+        <div class="field"><label>Obstaculizador 2 <span class="req">*</span></label><textarea id="l_obs2" rows="3" placeholder="Ej: Resistencia al acompañamiento externo, conflictos internos en el equipo directivo, escasez de horas ATP…"></textarea></div>
       </div>
       <div class="field">
         <label>Estrategias ante posibles contingencias <span class="req">*</span></label>
-        <textarea id="l_contingencias" placeholder="Ej: paralización, reemplazos, etc." rows="3"></textarea>
+        <textarea id="l_contingencias" placeholder="Ej: Si hay paralización docente, registrar evidencias disponibles y reprogramar visita. Si cambia el directivo, retomar desde etapa de involucramiento. Si el asesor se ausenta, redistribuir temporalmente los EE entre el equipo…" rows="3"></textarea>
       </div>
       <div class="section-label">Integración de focos del Plan Global</div>
+      <div style="background:#e8edf3;border:1.5px solid #9aaecc;border-radius:8px;padding:12px 15px;margin-bottom:16px;font-size:12px;color:#3d4555;line-height:1.6">
+        <strong style="color:#3d5a80;display:block;margin-bottom:3px">¿Qué significa integrar los focos del Plan Global?</strong>
+        Los focos del Plan Global SLEP son las temáticas estratégicas priorizadas para el territorio (ej: lectura, convivencia, liderazgo directivo). Integrarlos significa que las asesorías directas y en red no se diseñan de manera aislada, sino articuladas con esos focos, de modo que cada acompañamiento contribuya coherentemente a las metas del territorio. Describe aquí cómo tu trabajo con los EE se conecta con esos focos.
+      </div>
       <div class="grid3">
         <div class="field"><label>Estrategia 1 <span class="req">*</span></label><textarea id="l_focos1" rows="3" placeholder="Primera estrategia…"></textarea></div>
         <div class="field"><label>Estrategia 2 <span class="req">*</span></label><textarea id="l_focos2" rows="3" placeholder="Segunda estrategia…"></textarea></div>
@@ -449,6 +453,19 @@
           <div class="card-sub">Completa el diagnóstico para cada establecimiento asignado</div>
         </div>
         <span class="badge badge-teal">Sección 2 / 3</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding:10px 14px;background:#f7f8f9;border-radius:8px;border:1px solid #c8cdd6">
+        <span style="font-size:12px;color:#3d4555;font-weight:700">Establecimientos asignados — puedes eliminar o agregar por RBD</span>
+        <button onclick="mostrarAgregarEE()" style="background:#3d5a80;color:#fff;border:none;padding:7px 14px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">+ Agregar EE</button>
+      </div>
+      <div id="agregarEEPanel" style="display:none;background:#e8edf3;border:1.5px solid #9aaecc;border-radius:8px;padding:14px;margin-bottom:14px">
+        <div style="display:grid;grid-template-columns:1fr 2fr auto;gap:10px;align-items:end">
+          <div><label style="font-size:11px;font-weight:800;color:#3d4555;display:block;margin-bottom:5px;text-transform:uppercase">RBD</label>
+            <input type="number" id="nuevoRBD" placeholder="Ej: 6762" style="width:100%"></div>
+          <div><label style="font-size:11px;font-weight:800;color:#3d4555;display:block;margin-bottom:5px;text-transform:uppercase">Nombre del establecimiento</label>
+            <input type="text" id="nuevoNombre" placeholder="Nombre completo del EE"></div>
+          <button onclick="agregarEEManual()" style="background:#2e7d62;color:#fff;border:none;padding:10px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap">Agregar</button>
+        </div>
       </div>
       <div id="eeContainer"></div>
     </div>
@@ -499,7 +516,7 @@
 </div>
 
 <script>
-const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbySantZ5PARz2wFM_-LRMDDneWQQg3RzOxW5Ba3sKvevPrfsXh_sIKWaWKbTk8GFetC/exec";
+const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxlUls21mhcTdmQ_n8VRhKCXWnDZwCPnId7aTFjOLcCZkHpvJL13WSi3iMPWg3KgpyfVg/exec";
 // ============================================================
 
 const ETAPAS = ["1 - Involucramiento","2- Diagnóstico","3- Planificación","4- Ejecución","5- Evaluación"];
@@ -511,7 +528,8 @@ const FOCOS = [
   "Actualización de instrumentos de gestión","Clima de aula","Codocencia",
   "Cultura de trabajo profesional","Estrategias de transición","Estrategias y metodologías",
   "Evaluación","Formación y participación ciudadana IDPS","Inclusión educativa",
-  "Normas de convivencia","Observación y retroalimentación","Trayectorias educativas"
+  "Normas de convivencia","Observación y retroalimentación","Trayectorias educativas",
+  "Otra (descripción libre)"
 ];
 
 // Dimensiones EE
@@ -788,6 +806,7 @@ function buildEEForm() {
         <span class="ee-name">${ee.name}</span>
         ${isJI ? '<span class="badge badge-cyan" style="font-size:9px">JI</span>' : ''}
         <span class="ee-status" id="status_${id}"></span>
+        <button onclick="event.stopPropagation();eliminarEE('${id}')" style="background:none;border:1px solid rgba(185,28,28,.3);color:#b91c1c;font-size:10px;padding:3px 8px;border-radius:4px;cursor:pointer;font-family:inherit;font-weight:700;margin-left:4px">✕ Eliminar</button>
         <span class="ee-chevron">▼</span>
       </div>
       <div class="ee-body">
@@ -809,10 +828,11 @@ function buildEEForm() {
         </div>
         <div class="field">
           <label>Práctica problemática identificada</label>
-          <select id="${id}_practica_foco">
+          <select id="${id}_practica_foco" onchange="toggleOtroFoco('${id}')">
             <option value="">— Seleccionar foco —</option>
             ${FOCOS.map(f=>`<option>${f}</option>`).join("")}
           </select>
+          <input type="text" id="${id}_practica_otra" placeholder="Describe la práctica problemática…" style="display:none;margin-top:8px">
         </div>
         <div class="field">
           <label>Descripción / detalle de la práctica</label>
@@ -872,6 +892,117 @@ function buildEEForm() {
     `;
     c.appendChild(div);
   });
+}
+
+function mostrarAgregarEE() {
+  const p = sel("agregarEEPanel");
+  p.style.display = p.style.display === "none" ? "block" : "none";
+}
+
+function agregarEEManual() {
+  const rbd = sel("nuevoRBD").value.trim();
+  const nombre = sel("nuevoNombre").value.trim();
+  if (!rbd || !nombre) { showToast("Faltan datos","Ingresa RBD y nombre del establecimiento.","error"); return; }
+  const ees = ASESORES_EE[currentAsesor] || [];
+  const i = ees.length;
+  ASESORES_EE[currentAsesor].push({rbd: parseInt(rbd), name: nombre, ji: false});
+  // Append new block to container
+  const c2 = sel("eeContainer");
+  const id = "ee_" + i;
+  const div = document.createElement("div");
+  div.className = "ee-block open";
+  div.id = "block_" + id;
+  div.innerHTML = buildEEBlockHTML(id, {rbd: parseInt(rbd), name: nombre, ji: false}, i);
+  c2.appendChild(div);
+  sel("nuevoRBD").value = "";
+  sel("nuevoNombre").value = "";
+  sel("agregarEEPanel").style.display = "none";
+  showToast("EE agregado", nombre, "success");
+}
+
+function eliminarEE(id) {
+  if (!confirm("¿Eliminar este establecimiento de tu lista?")) return;
+  const block = sel("block_" + id);
+  if (block) block.remove();
+}
+
+function buildEEBlockHTML(id, ee, i) {
+  const isJI = ee.ji;
+  const dims = isJI ? DIM_JI : DIM_EE;
+  return `
+    <div class="ee-header" onclick="toggleEE('${id}')">
+      <span class="ee-rbd">${ee.rbd}</span>
+      <span class="ee-name">${ee.name}</span>
+      ${isJI ? '<span class="badge badge-cyan" style="font-size:9px">JI</span>' : ''}
+      <span class="ee-status" id="status_${id}"></span>
+      <button onclick="event.stopPropagation();eliminarEE('${id}')" style="background:none;border:1px solid rgba(185,28,28,.3);color:#b91c1c;font-size:10px;padding:3px 8px;border-radius:4px;cursor:pointer;font-family:inherit;font-weight:700;margin-left:4px">✕ Eliminar</button>
+      <span class="ee-chevron">▼</span>
+    </div>
+    <div class="ee-body" style="display:block">
+      <div class="grid2">
+        <div class="field"><label>Etapa del ciclo</label>
+          <select id="${id}_etapa" onchange="updateStatus('${id}')">
+            <option value="">— Seleccionar —</option>
+            ${ETAPAS.map(e=>`<option>${e}</option>`).join("")}
+          </select></div>
+        <div class="field"><label>¿Tienen identificada la práctica problemática?</label>
+          <select id="${id}_practica_id" onchange="updateStatus('${id}')">
+            <option value="">— Seleccionar —</option>
+            ${PRACTICA_OPTS.map(o=>`<option>${o}</option>`).join("")}
+          </select></div>
+      </div>
+      <div class="field"><label>Foco de la práctica problemática</label>
+        <select id="${id}_practica_foco" onchange="toggleOtroFoco('${id}')">
+          <option value="">— Seleccionar foco —</option>
+          ${FOCOS.map(f=>`<option>${f}</option>`).join("")}
+        </select>
+        <input type="text" id="${id}_practica_otra" placeholder="Describe la práctica problemática…" style="display:none;margin-top:8px">
+      </div>
+      <div class="field"><label>Descripción / detalle de la práctica</label>
+        <textarea id="${id}_practica_texto" rows="2" placeholder="Descripción libre…"></textarea></div>
+      <div class="grid2">
+        <div class="field"><label>Dimensión asociada</label>
+          <select id="${id}_dim" onchange="updateSubdim('${id}',${isJI})">
+            <option value="">— Seleccionar —</option>
+            ${dims.map(d=>`<option>${d}</option>`).join("")}
+          </select></div>
+        <div class="field"><label>Subdimensión</label>
+          <select id="${id}_subdim"><option value="">— Primero selecciona dimensión —</option></select></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>¿Se ha priorizado una capacidad?</label>
+          <select id="${id}_cap_id" onchange="updateStatus('${id}')">
+            <option value="">— Seleccionar —</option>
+            ${CAPACIDAD_OPTS.map(o=>`<option>${o}</option>`).join("")}
+          </select></div>
+        <div class="field"><label>Capacidad basal a movilizar</label>
+          <select id="${id}_cap_basal">
+            <option value="">— Seleccionar —</option>
+            ${CAPACIDAD_BASAL.map(c=>`<option>${c}</option>`).join("")}
+          </select></div>
+      </div>
+      <div class="field"><label>Objetivo planificado</label>
+        <textarea id="${id}_objetivo" rows="2" placeholder="Objetivo concreto…"></textarea></div>
+      <div class="field"><label>Periodicidad del acompañamiento</label>
+        <select id="${id}_periodicidad">
+          <option value="">— Seleccionar —</option>
+          ${PERIODICIDAD.map(p=>`<option>${p}</option>`).join("")}
+        </select></div>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:12px;border-top:1.5px solid #c8cdd6">
+        <button id="savebtn_${id}" data-id="${id}" data-rbd="${ee.rbd}" data-name="${ee.name}"
+          onclick="guardarEE(this.dataset.id,this.dataset.rbd,this.dataset.name)"
+          style="background:#3d5a80;color:#fff;padding:9px 18px;border-radius:7px;font-size:12px;font-weight:700;border:none;cursor:pointer;font-family:inherit">
+          💾 Guardar este establecimiento
+        </button>
+        <span id="saveok_${id}" style="display:none;font-size:12px;color:#2e7d62;font-weight:700">✓ Guardado</span>
+      </div>
+    </div>`;
+}
+
+function toggleOtroFoco(id) {
+  const val = sel(id + "_practica_foco") ? sel(id + "_practica_foco").value : "";
+  const otraInput = sel(id + "_practica_otra");
+  if (otraInput) otraInput.style.display = val === "Otra (descripción libre)" ? "block" : "none";
 }
 
 function toggleEE(id) {
@@ -1116,9 +1247,9 @@ function buildSummary() {
       <strong>Proyección asesorías directas:</strong> ${ld.n_asesorias_directas || "—"} &nbsp;|&nbsp;
       <strong>En red:</strong> ${ld.n_redes || "—"}
     </div>
-    ${WEBHOOK_URL === "https://script.google.com/macros/s/AKfycbySantZ5PARz2wFM_-LRMDDneWQQg3RzOxW5Ba3sKvevPrfsXh_sIKWaWKbTk8GFetC/exec" ? `
+    ${WEBHOOK_URL === "https://script.google.com/macros/s/AKfycbxlUls21mhcTdmQ_n8VRhKCXWnDZwCPnId7aTFjOLcCZkHpvJL13WSi3iMPWg3KgpyfVg/exec" ? `
     <div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:14px;margin-bottom:20px;font-size:12px;color:#fca5a5">
-      ⚠ <strong>El webhook no está configurado.</strong> Los datos no se enviarán hasta que reemplaces <code>https://script.google.com/macros/s/AKfycbySantZ5PARz2wFM_-LRMDDneWQQg3RzOxW5Ba3sKvevPrfsXh_sIKWaWKbTk8GFetC/exec</code> en el código por la URL de tu Apps Script.
+      ⚠ <strong>El webhook no está configurado.</strong> Los datos no se enviarán hasta que reemplaces <code>https://script.google.com/macros/s/AKfycbxlUls21mhcTdmQ_n8VRhKCXWnDZwCPnId7aTFjOLcCZkHpvJL13WSi3iMPWg3KgpyfVg/exec</code> en el código por la URL de tu Apps Script.
     </div>` : ""}
   `;
 }
@@ -1166,7 +1297,9 @@ async function guardarEE(id, rbd, nombre) {
   btn.disabled = true;
   btn.textContent = "⏳ Guardando...";
 
-  const foco = sel(id + "_practica_foco") ? sel(id + "_practica_foco").value : "";
+  const focoRaw = sel(id + "_practica_foco") ? sel(id + "_practica_foco").value : "";
+  const focoOtra = sel(id + "_practica_otra") ? sel(id + "_practica_otra").value : "";
+  const foco = focoRaw === "Otra (descripción libre)" ? "Otra: " + focoOtra : focoRaw;
   const texto = sel(id + "_practica_texto") ? sel(id + "_practica_texto").value : "";
 
   const fila = {
@@ -1209,7 +1342,7 @@ async function guardarEE(id, rbd, nombre) {
 }
 
 async function enviarTodo() {
-  if (WEBHOOK_URL === "https://script.google.com/macros/s/AKfycbySantZ5PARz2wFM_-LRMDDneWQQg3RzOxW5Ba3sKvevPrfsXh_sIKWaWKbTk8GFetC/exec") {
+  if (WEBHOOK_URL === "https://script.google.com/macros/s/AKfycbxlUls21mhcTdmQ_n8VRhKCXWnDZwCPnId7aTFjOLcCZkHpvJL13WSi3iMPWg3KgpyfVg/exec") {
     showToast("Webhook no configurado","Reemplaza la URL del Apps Script en el código.","error");
     return;
   }
