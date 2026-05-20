@@ -366,7 +366,7 @@
   <div class="screen active" id="screen-0">
     <div class="config-notice" id="configNotice">
       <strong>⚠ Configuración requerida antes de usar</strong>
-      Reemplaza <code>https://script.google.com/macros/s/AKfycbxlUls21mhcTdmQ_n8VRhKCXWnDZwCPnId7aTFjOLcCZkHpvJL13WSi3iMPWg3KgpyfVg/exec</code> por la URL de tu Google Apps Script.
+      Reemplaza <code>https://script.google.com/macros/s/AKfycbxOLeFdOscjjSo01AovjtoZKA_4t2zexlnL_C9fDdkVHWTvjTiHHMQBlILapqcObSFC0A/exec</code> por la URL de tu Google Apps Script.
     </div>
     <div class="welcome-hero">
       <div style="font-size:44px">📋</div>
@@ -516,7 +516,7 @@
 </div>
 
 <script>
-const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxlUls21mhcTdmQ_n8VRhKCXWnDZwCPnId7aTFjOLcCZkHpvJL13WSi3iMPWg3KgpyfVg/exec";
+const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxOLeFdOscjjSo01AovjtoZKA_4t2zexlnL_C9fDdkVHWTvjTiHHMQBlILapqcObSFC0A/exec";
 // ============================================================
 
 const ETAPAS = ["1 - Involucramiento","2- Diagnóstico","3- Planificación","4- Ejecución","5- Evaluación"];
@@ -1156,6 +1156,14 @@ function prevScreen() {
 }
 
 function nextScreen() {
+  if (currentScreen === 1) {
+    // Save liderazgo to local backup when leaving section 1
+    const ld = getLiderazgoData();
+    if (ld.decisiones || ld.facilitador1) {
+      agregarBackupLiderazgo(currentAsesor, ld);
+      descargarExcelRespaldo();
+    }
+  }
   if (currentScreen < 4) gotoScreen(currentScreen + 1);
 }
 
@@ -1247,14 +1255,36 @@ function buildSummary() {
       <strong>Proyección asesorías directas:</strong> ${ld.n_asesorias_directas || "—"} &nbsp;|&nbsp;
       <strong>En red:</strong> ${ld.n_redes || "—"}
     </div>
-    ${WEBHOOK_URL === "https://script.google.com/macros/s/AKfycbxlUls21mhcTdmQ_n8VRhKCXWnDZwCPnId7aTFjOLcCZkHpvJL13WSi3iMPWg3KgpyfVg/exec" ? `
+    ${WEBHOOK_URL === "https://script.google.com/macros/s/AKfycbxOLeFdOscjjSo01AovjtoZKA_4t2zexlnL_C9fDdkVHWTvjTiHHMQBlILapqcObSFC0A/exec" ? `
     <div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:14px;margin-bottom:20px;font-size:12px;color:#fca5a5">
-      ⚠ <strong>El webhook no está configurado.</strong> Los datos no se enviarán hasta que reemplaces <code>https://script.google.com/macros/s/AKfycbxlUls21mhcTdmQ_n8VRhKCXWnDZwCPnId7aTFjOLcCZkHpvJL13WSi3iMPWg3KgpyfVg/exec</code> en el código por la URL de tu Apps Script.
+      ⚠ <strong>El webhook no está configurado.</strong> Los datos no se enviarán hasta que reemplaces <code>https://script.google.com/macros/s/AKfycbxOLeFdOscjjSo01AovjtoZKA_4t2zexlnL_C9fDdkVHWTvjTiHHMQBlILapqcObSFC0A/exec</code> en el código por la URL de tu Apps Script.
     </div>` : ""}
   `;
 }
 
 const backupRows = [];
+
+function agregarBackupLiderazgo(asesor, ld) {
+  backupRows.push({
+    "Timestamp": new Date().toLocaleString("es-CL"),
+    "Tipo": "LIDERAZGO",
+    "Asesor": asesor,
+    "Decisiones": ld.decisiones,
+    "Facilitador_1": ld.facilitador1,
+    "Facilitador_2": ld.facilitador2,
+    "Obstaculizador_1": ld.obstaculizador1,
+    "Obstaculizador_2": ld.obstaculizador2,
+    "Contingencias": ld.contingencias,
+    "Estrategia_focos_1": ld.estrategia_focos1,
+    "Estrategia_focos_2": ld.estrategia_focos2,
+    "Estrategia_focos_3": ld.estrategia_focos3,
+    "Estrategia_LM_1": ld.estrategia_lm1,
+    "Estrategia_LM_2": ld.estrategia_lm2,
+    "Estrategia_LM_3": ld.estrategia_lm3,
+    "N_asesorias_directas": ld.n_asesorias_directas,
+    "N_redes": ld.n_redes
+  });
+}
 
 function agregarBackupEE(asesor, fila) {
   backupRows.push({
@@ -1342,7 +1372,7 @@ async function guardarEE(id, rbd, nombre) {
 }
 
 async function enviarTodo() {
-  if (WEBHOOK_URL === "https://script.google.com/macros/s/AKfycbxlUls21mhcTdmQ_n8VRhKCXWnDZwCPnId7aTFjOLcCZkHpvJL13WSi3iMPWg3KgpyfVg/exec") {
+  if (WEBHOOK_URL === "https://script.google.com/macros/s/AKfycbxOLeFdOscjjSo01AovjtoZKA_4t2zexlnL_C9fDdkVHWTvjTiHHMQBlILapqcObSFC0A/exec") {
     showToast("Webhook no configurado","Reemplaza la URL del Apps Script en el código.","error");
     return;
   }
